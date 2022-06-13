@@ -52,6 +52,9 @@
         $template = d.getElementById("crud-template").content,
         $fragment = d.createDocumentFragment();
 
+        /**
+         * Esta función obtiene la información de la API y la muestra en la tabla
+        */
         const getAll = async() => {
             try {
                 let res = await fetch("http://localhost:3000/santos");
@@ -79,9 +82,16 @@
                 $table.insertAdjacentHTML("afterend", `<p><b>Error ${err.status}: ${message}</b></p>`);
             }
         }
-
+        /**
+         * Este evento carga el DOM y se llama a la función que llena la tabla con la información
+        */
         d.addEventListener("DOMContentLoaded", getAll);
 
+        /**
+         * Este evento es cuando se da clic al botón del formulario, si el id del input que está oculto no tiene
+         * información se realiza el método POST, es decir se crea un nuevo elemento, pero si el id del input que
+         * está oculto si tiene información, lo que se hace es una actualización del registro.
+        */
         d.addEventListener("submit", async e => {
             if(e.target === $form){
                 e.preventDefault();
@@ -136,6 +146,10 @@
             }
         });
 
+        /**
+         * Este evento valida si se ha hecho clic en editar o eliminar y de acuerdo con esto ejecuta las funciones 
+         * correspondientes.
+        */
         d.addEventListener("click", async e => {
             if(e.target.matches(".edit")){
                 $title.textContent = "Editar Santo";
